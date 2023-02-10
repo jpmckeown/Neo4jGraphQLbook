@@ -1,6 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
 
+const businesses = [
+   {
+     businessId: "b1",
+     name: "San Mateo Public Library",
+     address: "55 W 3rd Ave",
+     category: "Library",
+   },
+   {
+     businessId: "b2",
+     name: "Ducky's Car Wash",
+     address: "716 N San Mateo Dr",
+     category: "Car Wash",
+   },
+   {
+     businessId: "b3",
+     name: "Hanabi",
+     address: "723 California Dr",
+     category: "Restaurant",
+   },
+];
+ 
 function App() {
   return (
     <div className="App">
