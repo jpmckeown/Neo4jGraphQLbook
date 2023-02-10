@@ -11,8 +11,25 @@ const driver = neo4j.driver(
 );
 
 const typeDefs = `
+   type Query{
+      fuzzyBusinessByName(searchString: String): [Business!]! @cypher(
+         statement: """
+         CALL db.index.fulltext.queryNodes('businessNameIndex', $searchString+'~')
+         YIELD node RETURN node
+         """
+      )
+   }
   type Business {
   businessId: ID!
+  averageStars: Float! @cypher(
+   statement:"MATCH (this)<-[:REVIEWS]-(r:Review) RETURN avg(r.stars)")
+  recommended(first: Int=1): [Business!]! @cypher(
+   statement: """
+   MATCH (this)<-[:REVIEWS]-(:Review)<-[:WROTE]-(u:User)
+   MATCH (u)-[:WROTE]->(:Review)-[:REVIEWS]->(rec:Business)
+   WITH rec, ORDER BY score DESC LIMIT $first
+   """
+  )
   name: String!
   city: String!
   state: String!
