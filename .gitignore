@@ -1,1 +1,6 @@
 node_modules/
+web-react/public/*
+!web-react/public/index.html
+web-react/src/logo.svg
+web-react/src/reportWebVitals.js
+web-react/src/*.css
