@@ -10,6 +10,15 @@ const driver = neo4j.driver(
    neo4j.auth.basic("neo4j", "5wps6NWGi_QXSnius_H9n-uWdb_CjnBsXO7e4gfhTMw")
 );
 
+const resolvers = {
+   Business: {
+      waitTime: (obj, args, context, info) => {
+         const options = [0, 5, 10, 15, 30, 45];
+         return options[Math.floor(Math.random() * options.length)];
+      }
+   }
+}
+
 const typeDefs = `
    type Query{
       fuzzyBusinessByName(searchString: String): [Business!]! @cypher(
@@ -19,8 +28,10 @@ const typeDefs = `
          """
       )
    }
+
   type Business {
   businessId: ID!
+  waitTime: Int! @customResolver
   averageStars: Float! @cypher(
    statement:"MATCH (this)<-[:REVIEWS]-(r:Review) RETURN avg(r.stars)")
   recommended(first: Int=1): [Business!]! @cypher(
@@ -59,7 +70,7 @@ type Category {
 }
 `;
 
-const neoSchema = new Neo4jGraphQL({typeDefs, driver});
+const neoSchema = new Neo4jGraphQL({typeDefs, resolvers, driver});
 
 neoSchema.getSchema().then((schema) => {
    const server = new ApolloServer({schema});
