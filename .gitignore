@@ -4,3 +4,5 @@ web-react/public/*
 web-react/src/logo.svg
 web-react/src/reportWebVitals.js
 web-react/src/*.css
+.DS_Store
+api/.DS_Store
