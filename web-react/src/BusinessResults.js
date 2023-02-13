@@ -1,3 +1,4 @@
+// no State needed
 function BusinessResults(props) {
    const {businesses} = props;
    return (
