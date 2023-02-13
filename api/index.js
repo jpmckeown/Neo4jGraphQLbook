@@ -50,11 +50,13 @@ const typeDefs = `
   categories: [Category!]!
     @relationship(type: "IN_CATEGORY", direction: OUT)
 }
+
 type User {
   userID: ID!
   name: String!
   reviews: [Review!]! @relationship(type: "WROTE", direction: OUT)
 }
+
 type Review {
   reviewId: ID!
   stars: Float!
@@ -63,10 +65,16 @@ type Review {
   user: User! @relationship(type: "WROTE", direction: IN)
   business: Business! @relationship(type: "REVIEWS", direction: OUT)
 }
+
 type Category {
-  name: String!
-  businesses: [Business!]!
-    @relationship(type: "IN_CATEGORY", direction: IN)
+   name: String!
+   businesses: [Business!]!
+      @relationship(type: "IN_CATEGORY", direction: IN)
+   businessCount: Int! @cypher(statement: """
+      MATCH (b:Business)-[:IN_CATEGORY]->(this:Category)
+      RETURN count(b)
+   """
+   )
 }
 `;
 
