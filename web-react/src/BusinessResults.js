@@ -8,7 +8,8 @@ function BusinessResults(props) {
       <thead>
       <tr>
       <th>Name</th>
-      <th>Address</th>
+                  <th>Address</th>
+                  <th>City</th>
       <th>Category</th>
       </tr>
       </thead>
@@ -16,7 +17,8 @@ function BusinessResults(props) {
       {businesses.map((b, i) => (
       <tr key={i}>
       <td>{b.name}</td>
-      <td>{b.address}</td>
+            <td>{b.address}</td>
+            <td>{b.city}</td>
       <td>{b.category}</td>
       </tr>
       ))}

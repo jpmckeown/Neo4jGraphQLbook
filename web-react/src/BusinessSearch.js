@@ -3,26 +3,47 @@ import BusinessResults from "./BusinessResults";
 const businesses = [
    {
      businessId: "b1",
-     name: "San Mateo Public Library",
+      name: "San Mateo Public Library",
+     city: "San Francisco",
      address: "55 W 3rd Ave",
      category: "Library",
    },
    {
      businessId: "b2",
      name: "Ducky's Car Wash",
-     address: "716 N San Mateo Dr",
+      address: "716 N San Mateo Dr",
+     city:"Los Angeles",
      category: "Car Wash",
    },
    {
      businessId: "b3",
      name: "Hanabi",
-     address: "723 California Dr",
+      address: "723 California Dr",
+     city:"Sacramento",
      category: "Restaurant",
    },
 ];
  
 function BusinessSearch(props) {
    const [selectedCategory, setSelectedCategory] = useState("All");
+   const [selectedCity, setSelectedCity] = useState("All")
+
+   const filterBusinesses = () => {
+      const categoryFiltered =
+      selectedCategory === "All"
+         ? businesses
+            : businesses.filter((b)=> {
+         return b.category === selectedCategory;
+            })
+      
+      const cityFiltered =
+      selectedCity === "All" ? categoryFiltered
+         : categoryFiltered.filter((b)=> {
+            return b.city === selectedCity;
+         })
+      return cityFiltered
+   }
+
    return (
       <div>
       <h1>Business Search</h1>
@@ -37,16 +58,26 @@ function BusinessSearch(props) {
       <option value="Library">Library</option>
       <option value="Restaurant">Restaurant</option>
       <option value="Car Wash">Car Wash</option>
-      </select>
+               </select>
+               </label>
+               <label>
+      Select Business City:
+      <select 
+         value={selectedCity}
+         onChange={(event) => setSelectedCity(event.target.value)}
+      >
+      <option value="All">All</option>
+      <option value="San Francisco">San Francisco</option>
+      <option value="Los Angeles">Los Angeles</option>
+      <option value="Sacramento">Sacramento</option>
+      </select>               
       </label>
       <input type="submit" value="Submit" />
       </form>
          
-      <BusinessResults businesses={
-      selectedCategory === "All" ? businesses
-         : businesses.filter((b)=> {
-      return b.category === selectedCategory;
-   })} /> 
+         <BusinessResults businesses={filterBusinesses()}
+            
+ /> 
 
       </div>
    )
