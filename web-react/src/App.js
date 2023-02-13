@@ -1,6 +1,5 @@
-
+import React, {useState} from "react";
 import BusinessResults from './BusinessResults';
-import logo from './logo.svg';
 import './App.css';
 
 const businesses = [
@@ -25,13 +24,15 @@ const businesses = [
 ];
  
 function App() {
+   const [selectedCategory, setSelectedCategory] = useState("All")
    return (
    <div>
    <h1>Business Search</h1>
    <form>
       <label>
       Select Business Category:
-      <select value="All">
+      <select value={selectedCategory}
+         onChange={(event)=>setSelectedCategory(event.target.value)}>
       <option value="All">All</option>
       <option value="Library">Library</option>
       <option value="Restaurant">Restaurant</option>
@@ -40,7 +41,12 @@ function App() {
       </label>
       <input type="submit" value="Submit" />
    </form>
-   <BusinessResults businesses={businesses} />       
+   
+   <BusinessResults businesses={
+      selectedCategory === "All" ? businesses
+         : businesses.filter((b)=> {
+      return b.category === selectedCategory;
+   })} />       
    </div>
    );
 }
