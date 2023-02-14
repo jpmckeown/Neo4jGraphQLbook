@@ -36,12 +36,20 @@ function BusinessSearch(props) {
    }
 
    const filterBusinesses = () => {
+      const categories = ["Library", "Restaurant", "Car Wash"]
+      const getSelectedCategories = () => {
+         return categories.filter((c, index) => {
+            return selectedCategory[index]===true
+         })
+      }
+      const selectedCategories = getSelectedCategories()
+      console.log('categories',categories);
+      console.log('selectedCatgeories',selectedCategories);
+      
       const categoryFiltered =
-      selectedCategory === "All"
-         ? businesses
-            : businesses.filter((b)=> {
-         return b.category === selectedCategory;
-            })
+         businesses.filter( (b)=> {
+            return selectedCategories.includes(b.category)
+      })
       
       const cityFiltered =
       selectedCity === "All" ? categoryFiltered
