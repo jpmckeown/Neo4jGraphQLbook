@@ -25,8 +25,15 @@ const businesses = [
 ];
  
 function BusinessSearch(props) {
-   const [selectedCategory, setSelectedCategory] = useState("All");
+   const [selectedCategory, setSelectedCategory] = useState([true,true,true]);
    const [selectedCity, setSelectedCity] = useState("All")
+
+   const handleOnChange = (whichCheckboxChange) => {
+      const updatedCheckState = selectedCategory.map( (item, index) => {
+         return index === whichCheckboxChange ? !item : item
+      })
+   setSelectedCategory(updatedCheckState);
+   }
 
    const filterBusinesses = () => {
       const categoryFiltered =
@@ -49,8 +56,8 @@ function BusinessSearch(props) {
       <h1>Business Search</h1>
    <form>
       <label>
-      Select Business Category:
-      <select 
+      Select Business Category:</label>
+      {/* <select 
          value={selectedCategory}
          onChange={(event) => setSelectedCategory(event.target.value)}
       >
@@ -58,8 +65,31 @@ function BusinessSearch(props) {
       <option value="Library">Library</option>
       <option value="Restaurant">Restaurant</option>
       <option value="Car Wash">Car Wash</option>
-               </select>
-               </label>
+               </select> */}
+               <input
+                  type="checkbox"
+                  name="Library"
+                  value="Library"
+                  checked={selectedCategory[0]}
+                  onChange={() => handleOnChange(0)}
+                  /> <label>Library</label>
+   
+               <input
+                  type="checkbox"
+                  name="Restaurant"
+                  value="Restaurant"
+                  checked={selectedCategory[1]}
+                  onChange={() => handleOnChange(1)}
+                  /> <label>Restaurant</label>
+            
+            <input
+                  type="checkbox"
+                  name="Car Wash"
+                  value="Car Wash"
+                  checked={selectedCategory[2]}
+                  onChange={() => handleOnChange(2)}
+                  /> <label>Car Wash</label>
+
                <label>
       Select Business City:
       <select 
