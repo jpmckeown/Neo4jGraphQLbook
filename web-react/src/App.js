@@ -31,10 +31,14 @@ const GET_BUSINESSES_QUERY = gql`
 
 function App() {
    const [selectedCategory, setSelectedCategory] = useState("");
-console.log("selectedCategory", selectedCategory);
-   const {loading, error, data} = useQuery(GET_BUSINESSES_QUERY, {
+
+   const {loading, error, data, refetch} = useQuery(
+      GET_BUSINESSES_QUERY, {
       variables: {selectedCategory},
+      // pollInterval: 3000
    });
+   console.log(refetch);
+   
    if (error) return <p>Error when useQuery</p>
    if (loading) return <p>Loading...</p>
 
@@ -52,10 +56,10 @@ console.log("selectedCategory", selectedCategory);
          <option value="Library">Library</option>
          <option value="Restaurant">Restaurant</option>
          <option value="Car Wash">Car Wash</option>
-               </select>
+      </select>
                
       </label>
-            <input type="submit" value="Submit" />
+      <input type="button" value="Refetch" onClick={()=>refetch()} />
       </form>
          
          <BusinessResults businesses={data.businesses} /> 
