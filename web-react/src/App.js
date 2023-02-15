@@ -37,8 +37,8 @@ function App() {
       variables: {selectedCategory},
       // pollInterval: 3000
    });
-   console.log(refetch);
-   
+   //console.log(refetch);
+
    if (error) return <p>Error when useQuery</p>
    if (loading) return <p>Loading...</p>
 
