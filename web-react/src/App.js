@@ -1,14 +1,17 @@
 import React, {useState} from "react";
 import BusinessResults from "./BusinessResults";
 import {gql, useQuery} from "@apollo/client";
-import './App.css';
+// import './App.css';
 // import BusinessSearch from "./BusinessSearch";
 // import React from "react";
 
+// query BusinessesByCategory($selectedCategory: String!){
+//    businesses(where: {categories_SOME: 
+//       {name_CONTAINS: $selectedCategory}}) {
+
 const GET_BUSINESSES_QUERY = gql`
    query BusinessesByCategory($selectedCategory: String!){
-      businesses(where: {categories_SOME: 
-         {name_CONTAINS: $selectedCategory}}) {
+      businesses(where: {categories_SOME: {name_CONTAINS: $selectedCategory} }) {
          businessId
          name
          address
@@ -20,8 +23,11 @@ const GET_BUSINESSES_QUERY = gql`
 `;
 
 function App() {
-   const [selectedCategory, setSelectedCategory] = useState("All");
-   const {loading, error, data} = useQuery(GET_BUSINESSES_QUERY);
+   const [selectedCategory, setSelectedCategory] = useState("");
+console.log("selectedCategory", selectedCategory);
+   const {loading, error, data} = useQuery(GET_BUSINESSES_QUERY, {
+      variables: {selectedCategory},
+   });
    if (error) return <p>Error when useQuery</p>
    if (loading) return <p>Loading...</p>
 
