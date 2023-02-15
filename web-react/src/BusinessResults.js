@@ -1,6 +1,10 @@
 // no State needed
+import {starredVar} from "./index";
+
 function BusinessResults(props) {
    const {businesses} = props;
+   const starredItems = starredVar();
+
    return (
       <div>
       <h2>Results</h2>
@@ -15,7 +19,11 @@ function BusinessResults(props) {
       <tbody>
       {businesses.map((b, i) => (
       <tr key={i}>
-      <td>{b.name}</td>
+            <td><button onClick={() =>
+      starredVar([...starredItems, b.businessId])}>Star</button></td>
+            <td style={b.isStarred
+               ? {fontWeight: "bold"}
+               : null}>{b.name}</td>
             <td>{b.address}</td>
             <td>{b.city}</td>
             <td>{b.categories.reduce(

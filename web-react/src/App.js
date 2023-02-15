@@ -24,6 +24,7 @@ const GET_BUSINESSES_QUERY = gql`
          }
       }) {
          ...businessDetails
+         isStarred @client
       }
    }
    ${BUSINESS_DETAILS_FRAGMENT}
