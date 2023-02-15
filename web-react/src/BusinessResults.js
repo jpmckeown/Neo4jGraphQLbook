@@ -8,8 +8,7 @@ function BusinessResults(props) {
       <thead>
       <tr>
       <th>Name</th>
-                  <th>Address</th>
-                  <th>City</th>
+      <th>Address</th>
       <th>Category</th>
       </tr>
       </thead>
@@ -19,7 +18,9 @@ function BusinessResults(props) {
       <td>{b.name}</td>
             <td>{b.address}</td>
             <td>{b.city}</td>
-      <td>{b.category}</td>
+            <td>{b.categories.reduce(
+         (acc,c,i)=> acc+ (i===0 ? " " : ", ") + c.name, ""
+      )}</td>
       </tr>
       ))}
       </tbody>
