@@ -15,19 +15,19 @@ const BUSINESS_DETAILS_FRAGMENT = gql`
       }
    }
 `;
-const USER_DETAILS_FRAGMENT = gql`
-   fragment userDetails on User{
-      userId
-      name
-   }
-`;
-const REVIEW_DETAILS_FRAGMENT = gql`
-   fragment reviewDetails on Review{
-      reviewId
-      stars
-      text
-   }
-`;
+// const USER_DETAILS_FRAGMENT = gql`
+//    fragment userDetails on User{
+//       userId
+//       name
+//    }
+// `;
+// const REVIEW_DETAILS_FRAGMENT = gql`
+//    fragment reviewDetails on Review{
+//       reviewId
+//       stars
+//       text
+//    }
+// `;
 
 const GET_BUSINESSES_QUERY = gql`
    query BusinessesByCategory($selectedCategory: String!){
