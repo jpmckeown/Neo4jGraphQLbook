@@ -19,8 +19,19 @@ function BusinessResults(props) {
       <tbody>
       {businesses.map((b, i) => (
       <tr key={i}>
-            <td><button onClick={() =>
-      starredVar([...starredItems, b.businessId])}>Star</button></td>
+            <td><button onClick={() => {
+               // toggle starred item
+               if(b.isStarred) {
+                  starredVar(
+                     starredItems.filter((i) => {
+                        return i !== b.businessId;
+                     })
+                  );
+               } else {
+                  starredVar([...starredItems, b.businessId])
+               }
+            }
+      }>Star</button></td>
             <td style={b.isStarred
                ? {fontWeight: "bold"}
                : null}>{b.name}</td>
