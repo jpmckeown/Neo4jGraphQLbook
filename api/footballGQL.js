@@ -1,5 +1,7 @@
-// template from index.js with Football typeDefs
+// using Introspect automated translate Neo4j to basic GraphQL
+// Exercise 3 from Lyon book, page 98 
 
+// template from index.js with Football typeDefs substituted
 const {ApolloServer} = require("apollo-server");
 const neo4j = require("neo4j-driver");
 const {Neo4jGraphQL} = require("@neo4j/graphql");
