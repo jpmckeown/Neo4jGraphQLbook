@@ -32,8 +32,9 @@ const typeDefs = `
   type Business {
   businessId: ID!
   waitTime: Int! @customResolver
-  averageStars: Float! @cypher(
-   statement:"MATCH (this)<-[:REVIEWS]-(r:Review) RETURN avg(r.stars)")
+  averageStars: Float! 
+   @auth(rules:[{isAuthenticated: true}])
+   @cypher(statement:"MATCH (this)<-[:REVIEWS]-(r:Review) RETURN avg(r.stars)")
   recommended(first: Int=1): [Business!]! @cypher(
    statement: """
    MATCH (this)<-[:REVIEWS]-(:Review)<-[:WROTE]-(u:User)
