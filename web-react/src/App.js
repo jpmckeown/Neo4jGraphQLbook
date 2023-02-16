@@ -15,6 +15,19 @@ const BUSINESS_DETAILS_FRAGMENT = gql`
       }
    }
 `;
+const USER_DETAILS_FRAGMENT = gql`
+   fragment userDetails on User{
+      userId
+      name
+   }
+`;
+const REVIEW_DETAILS_FRAGMENT = gql`
+   fragment reviewDetails on Review{
+      reviewId
+      stars
+      text
+   }
+`;
 
 const GET_BUSINESSES_QUERY = gql`
    query BusinessesByCategory($selectedCategory: String!){
@@ -29,6 +42,9 @@ const GET_BUSINESSES_QUERY = gql`
    }
    ${BUSINESS_DETAILS_FRAGMENT}
 `;
+
+// const GET_USERS_QUERY = gql`
+// `;
 
 function App() {
    const [selectedCategory, setSelectedCategory] = useState("");
