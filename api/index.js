@@ -78,7 +78,15 @@ type Category {
 }
 `;
 
-const neoSchema = new Neo4jGraphQL({typeDefs, resolvers, driver});
+const {Neo4jGraphQLAuthPlugin, Neo4jGraphQLAuthJWTPlugin, } = require("@neo4j/graphql-plugin-auth")
+
+const neoSchema = new Neo4jGraphQL({
+   typeDefs, resolvers, driver, plugins: {
+      auth: new Neo4jGraphQLAuthJWTPlugin({
+         secret: process.env.JWT_SECRET,
+      }),
+   },
+});
 
 neoSchema.getSchema().then((schema) => {
    const server = new ApolloServer({schema});
