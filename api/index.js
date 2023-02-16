@@ -89,7 +89,10 @@ const neoSchema = new Neo4jGraphQL({
 });
 
 neoSchema.getSchema().then((schema) => {
-   const server = new ApolloServer({schema});
+   const server = new ApolloServer({
+      schema,
+      context: ({req})=>({req}),
+   });
    server.listen().then(({url}) => {
       console.log(`GraphQL server ready at ${url}`);
    });
