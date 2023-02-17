@@ -2,6 +2,7 @@
 const {ApolloServer} = require("apollo-server");
 const neo4j = require("neo4j-driver");
 const {Neo4jGraphQL} = require("@neo4j/graphql");
+require('dotenv').config();
 
 const driver = neo4j.driver(
    // "bolt://localhost:7687",
@@ -32,8 +33,7 @@ const typeDefs = `
   type Business {
   businessId: ID!
   waitTime: Int! @customResolver
-  averageStars: Float! 
-   @auth(rules:[{isAuthenticated: true}])
+  averageStars: Float!
    @cypher(statement:"MATCH (this)<-[:REVIEWS]-(r:Review) RETURN avg(r.stars)")
   recommended(first: Int=1): [Business!]! @cypher(
    statement: """
@@ -43,7 +43,7 @@ const typeDefs = `
    """
   )
   name: String!
-  city: String!
+  city: String! @auth(rules:[{isAuthenticated: true}])
   state: String!
   address: String!
   location: Point!
@@ -87,7 +87,7 @@ const neoSchema = new Neo4jGraphQL({
          secret: process.env.JWT_SECRET,
       }),
    },
-});
+}); // test Auth failure above: process.env.JWT_WRONG,
 
 neoSchema.getSchema().then((schema) => {
    const server = new ApolloServer({
@@ -98,3 +98,5 @@ neoSchema.getSchema().then((schema) => {
       console.log(`GraphQL server ready at ${url}`);
    });
 });
+
+console.log("JWT_SECRET", process.env.JWT_SECRET)
