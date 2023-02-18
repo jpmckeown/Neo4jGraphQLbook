@@ -1,5 +1,6 @@
 // import {ApolloServer} from '@apollo/server';
 const {ApolloServer} = require("apollo-server");
+const jwt = require("jsonwebtoken");
 const neo4j = require("neo4j-driver");
 const {Neo4jGraphQL} = require("@neo4j/graphql");
 require('dotenv').config();
@@ -34,16 +35,17 @@ const typeDefs = `
   businessId: ID!
   waitTime: Int! @customResolver
   averageStars: Float!
+   @auth(rules: [{ isAuthenticated: true }])
    @cypher(statement:"MATCH (this)<-[:REVIEWS]-(r:Review) RETURN avg(r.stars)")
-  recommended(first: Int=1): [Business!]! @cypher(
-   statement: """
+  recommended(first: Int=1): [Business!]! 
+   @cypher( statement: """
    MATCH (this)<-[:REVIEWS]-(:Review)<-[:WROTE]-(u:User)
    MATCH (u)-[:WROTE]->(:Review)-[:REVIEWS]->(rec:Business)
    WITH rec, ORDER BY score DESC LIMIT $first
    """
   )
   name: String!
-  city: String! @auth(rules:[{isAuthenticated: true}])
+  city: String!
   state: String!
   address: String!
   location: Point!
@@ -53,7 +55,7 @@ const typeDefs = `
 }
 
 type User {
-  userID: ID!
+  userId: ID!
   name: String!
   reviews: [Review!]! @relationship(type: "WROTE", direction: OUT)
 }
@@ -79,8 +81,14 @@ type Category {
 }
 `;
 
-const {Neo4jGraphQLAuthPlugin, Neo4jGraphQLAuthJWTPlugin, } = require("@neo4j/graphql-plugin-auth")
+// Neo4jGraphQLAuthPlugin
+const {Neo4jGraphQLAuthJWTPlugin} = require("@neo4j/graphql-plugin-auth")
+// const {Neo4jGraphQLAuthJWKSPlugin} = require("@neo4j/graphql-plugin-auth")
 
+// auth: new Neo4jGraphQLAuthJWTPlugin({
+//    secret: process.env.JWT_SECRET,
+// auth: new Neo4jGraphQLAuthJWKSPlugin({
+//    jwksEndpoint: "https://mckeown.me/.well-known/jwks.json",
 const neoSchema = new Neo4jGraphQL({
    typeDefs, resolvers, driver, plugins: {
       auth: new Neo4jGraphQLAuthJWTPlugin({
