@@ -6,6 +6,8 @@ const {Neo4jGraphQL} = require("@neo4j/graphql");
 require('dotenv').config();
 
 // import {ApolloServer} from '@apollo/server';
+// local env store JWT_SECRET, alternative is using JWKS
+const authJWKS = false;
 
 const driver = neo4j.driver(
    // "bolt://localhost:7687",
@@ -93,22 +95,25 @@ type Category {
 }
 `;
 
-const {Neo4jGraphQLAuthJWKSPlugin,} = require("@neo4j/graphql-plugin-auth")
-
+// Neo4jGraphQLAuthPlugin
+const {Neo4jGraphQLAuthJWTPlugin} = require("@neo4j/graphql-plugin-auth")
 const neoSchema = new Neo4jGraphQL({
    typeDefs, resolvers, driver, plugins: {
-      auth: new Neo4jGraphQLAuthJWKSPlugin({
-         jwksEndpoint: "https://mckeown.me/.well-known/jwks.json",
+      auth: new Neo4jGraphQLAuthJWTPlugin({
+         secret: process.env.JWT_SECRET,
       }),
    },
 });
+// test Auth failure above: process.env.JWT_WRONG,
 
 neoSchema.getSchema().then((schema) => {
    const server = new ApolloServer({
       schema,
       context: ({req})=>({req}),
    });
-   server.listen({port: process.env.PORT || 4001}).then(({url}) => {
+   server.listen().then(({url}) => {
       console.log(`GraphQL server ready at ${url}`);
    });
 });
+
+console.log("JWT_SECRET", process.env.JWT_SECRET)
