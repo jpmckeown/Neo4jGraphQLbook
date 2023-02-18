@@ -28,16 +28,9 @@ const client = new ApolloClient({
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(
    <React.StrictMode>
-      <Auth0Provider
-         domain="mckeown.me"
-         clientId=""
-         redirectUri={}
-         audience="mckeown.me"
-      >
-         <ApolloProvider client={client}>
-            <App />
-         </ApolloProvider>
-      </Auth0Provider>
+      <ApolloProvider client={client}>
+         <App />
+      </ApolloProvider>
   </React.StrictMode>
 );
 
