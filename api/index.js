@@ -60,8 +60,8 @@ type User {
   reviews: [Review!]! @relationship(type: "WROTE", direction: OUT)
 }
 extend type User @auth(rules: [
-   {operations: [READ], allow:{userId: "$jwt.sub"}}
-   {roles: ["admin"]}
+   {operations: [READ], where:{userId: "$jwt.sub"}}
+   {operations: [READ,CREATE,UPDATE,DELETE], roles: ["admin"]}
 ])
 
 type Review {
