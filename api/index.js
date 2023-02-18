@@ -61,7 +61,7 @@ type User {
 }
 extend type User @auth(rules: [
    {operations: [READ], where:{userId: "$jwt.sub"}}
-   {operations: [READ,CREATE,UPDATE,DELETE], roles: ["admin"]}
+   {operations: [CREATE,UPDATE,DELETE], roles: ["admin"]}
 ])
 
 type Review {
@@ -72,6 +72,12 @@ type Review {
   user: User! @relationship(type: "WROTE", direction: IN)
   business: Business! @relationship(type: "REVIEWS", direction: OUT)
 }
+extend type Review @auth( 
+   rules: [{
+      operations: [CREATE, UPDATE]
+      bind: {user: {userId: "$jwt.sub" }}
+   }
+])
 
 type Category {
    name: String!
