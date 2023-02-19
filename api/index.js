@@ -108,7 +108,7 @@ neoSchema.getSchema().then((schema) => {
       schema,
       context: ({req})=>({req}),
    });
-   server.listen({port: process.env.PORT_SERVER || 3001}).then(({url}) => {
+   server.listen({port: process.env.PORT_SERVER || 4001}).then(({url}) => {
       console.log(`GraphQL server ready at ${url}`);
    });
 });
