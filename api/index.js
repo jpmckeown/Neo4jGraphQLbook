@@ -98,7 +98,7 @@ const {Neo4jGraphQLAuthJWKSPlugin,} = require("@neo4j/graphql-plugin-auth")
 const neoSchema = new Neo4jGraphQL({
    typeDefs, resolvers, driver, plugins: {
       auth: new Neo4jGraphQLAuthJWKSPlugin({
-         jwksEndpoint: "https://mckeown.me/.well-known/jwks.json",
+         jwksEndpoint: "https://dev-5buaw1p10tc2dc2y.us.auth0.com/.well-known/jwks.json",
       }),
    },
 });

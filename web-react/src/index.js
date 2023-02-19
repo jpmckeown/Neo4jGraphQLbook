@@ -29,9 +29,9 @@ const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(
    <React.StrictMode>
       <Auth0Provider
-         domain="mckeown.me"
-         clientId=""
-         redirectUri={}
+         domain="https://dev-5buaw1p10tc2dc2y.us.auth0.com/"
+         clientId="jTi8E1pvtMNRPfkkMZNvBxa3XtAGs9n7"
+         redirectUri={window.location.origin}
          audience="mckeown.me"
       >
          <ApolloProvider client={client}>
