@@ -1,5 +1,5 @@
-Mac version of step-by-step following book by Wm Lyon
-npm init --yes
-npm i @neo4j/graphql graphql neo4j-driver apollo-server
+Mac version of my step-by-step following book by William Lyon (after my earlier effort on  Windows broke in chapter 5).
 
-Accidentally installed Apollo 4 alongside 3, try 4 and fall back to 3 (and remove 4) if book code fails.
+Currently reached chapter 7 page 164 (in Auth0 section, with Auth0.com sending a Not Found error).
+
+Apollo still version 3 while following book.
